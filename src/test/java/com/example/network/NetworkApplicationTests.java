@@ -1,10 +1,10 @@
-package com.example.device_api;
+package com.example.network;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DeviceApiApplicationTests {
+class NetworkApplicationTests {
 
 	@Test
 	void contextLoads() {

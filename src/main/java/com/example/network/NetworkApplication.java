@@ -1,13 +1,13 @@
-package com.example.device_api;
+package com.example.network;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DeviceApiApplication {
+public class NetworkApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DeviceApiApplication.class, args);
+		SpringApplication.run(NetworkApplication.class, args);
 	}
 
 }
