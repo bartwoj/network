@@ -47,21 +47,3 @@ http://localhost:8080/v3/api-docs
 | `GET` | `/device/retrieveOneAsTree` | Retrieve a device with its full uplink chain |
 | `GET` | `/device/retrieveAllAsTree` | Retrieve all devices as uplink trees |
 
-## Device Tree
-
-Devices are linked via uplink relationships. The tree endpoints represent each device
-chained up to its root, for example:
-
-```
-ACCESS_POINT (AA:03)
-  └── uplink: SWITCH (AA:02)
-        └── uplink: GATEWAY (AA:01)
-```
-
-## H2 Console
-
-An in-memory H2 database is used by default. The console is accessible at:
-
-```
-http://localhost:8080/h2-console
-```
