@@ -1,7 +1,7 @@
 package com.example.network.device.controller;
 
-import com.example.network.device.model.Device;
 import com.example.network.device.response.DeviceEntry;
+import com.example.network.device.response.DeviceTreeNode;
 import com.example.network.device.service.DeviceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,20 +21,42 @@ public class DeviceController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Device> registerDevice(
-            @RequestParam String deviceType,
+    public ResponseEntity<DeviceEntry> registerDevice(
             @RequestParam String macAddress,
+            @RequestParam String deviceType,
             @RequestParam(required = false) String uplinkMacAddress
     ) {
         return ResponseEntity.ok(
-                deviceService.registerDevice(deviceType, macAddress, uplinkMacAddress)
+                deviceService.registerDevice(macAddress, deviceType, uplinkMacAddress)
+        );
+    }
+
+    @GetMapping("/retrieve")
+    public ResponseEntity<DeviceEntry> retrieveDevice(@RequestParam String macAddress) {
+        return ResponseEntity.ok(
+                deviceService.retrieve(macAddress)
         );
     }
 
     @GetMapping("/retrieveAll")
-    public ResponseEntity<Collection<DeviceEntry>> retrieveAllDevices() {
+    public ResponseEntity<Collection<DeviceEntry>> retrieveAllDevicesSorted() {
         return ResponseEntity.ok(
                 deviceService.retrieveAllSorted()
         );
     }
+
+    @GetMapping("/retrieveOneAsTree")
+    public ResponseEntity<DeviceTreeNode> retrieveDeviceAsTree(@RequestParam String macAddress) {
+        return ResponseEntity.ok(
+                deviceService.retrieveOneAsTree(macAddress)
+        );
+    }
+
+    @GetMapping("/retrieveAllAsTree")
+    public ResponseEntity<Collection<DeviceTreeNode>> retrieveAllDevicesAsTree() {
+        return ResponseEntity.ok(
+                deviceService.retrieveAllAsTree()
+        );
+    }
+
 }
