@@ -148,7 +148,6 @@ class DeviceServiceImplTest {
 
         Collection<DeviceTreeNode> tree = deviceService.retrieveAllAsTree();
 
-        // only AP is not referenced as anyone's uplink → single entry point
         assertThat(tree).hasSize(1);
         assertThat(tree.iterator().next().getMacAddress()).isEqualTo("AA:03");
     }
@@ -159,7 +158,6 @@ class DeviceServiceImplTest {
 
         DeviceTreeNode leaf = deviceService.retrieveAllAsTree().iterator().next();
 
-        // AP → Switch → Gateway
         assertThat(leaf.getMacAddress()).isEqualTo("AA:03");
         assertThat(leaf.getUplink().getMacAddress()).isEqualTo("AA:02");
         assertThat(leaf.getUplink().getUplink().getMacAddress()).isEqualTo("AA:01");
@@ -208,7 +206,6 @@ class DeviceServiceImplTest {
 
         DeviceTreeNode result = deviceService.retrieveOneAsTree("AA:03");
 
-        // AP → Switch → Gateway
         assertThat(result.getMacAddress()).isEqualTo("AA:03");
         assertThat(result.getUplink().getMacAddress()).isEqualTo("AA:02");
         assertThat(result.getUplink().getUplink().getMacAddress()).isEqualTo("AA:01");
@@ -221,7 +218,6 @@ class DeviceServiceImplTest {
 
         DeviceTreeNode result = deviceService.retrieveOneAsTree("AA:02");
 
-        // Switch → Gateway (AP should NOT appear)
         assertThat(result.getMacAddress()).isEqualTo("AA:02");
         assertThat(result.getUplink().getMacAddress()).isEqualTo("AA:01");
         assertThat(result.getUplink().getUplink()).isNull();
@@ -267,7 +263,6 @@ class DeviceServiceImplTest {
 
         Collection<DeviceTreeNode> tree = deviceService.retrieveAllAsTree();
 
-        // BB:01 (loose) and CC:02 (leaf of chain) are both not referenced as anyone's uplink
         assertThat(tree).hasSize(2);
 
         DeviceTreeNode loose = tree.stream()
@@ -280,10 +275,7 @@ class DeviceServiceImplTest {
                 .findFirst()
                 .orElseThrow();
 
-        // loose device has no uplink
         assertThat(loose.getUplink()).isNull();
-
-        // chain leaf points up to chain root
         assertThat(leaf.getUplink()).isNotNull();
         assertThat(leaf.getUplink().getMacAddress()).isEqualTo("CC:01");
         assertThat(leaf.getUplink().getUplink()).isNull();
